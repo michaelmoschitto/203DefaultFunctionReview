@@ -1,14 +1,17 @@
-// usually would have this in another folder
+// ---------------------------------------------------
+// TODO: Fix the errors and decouple this OOP project.
+// * StorageContainers are Containers
+// * FordF150's are Vehicle's AND StorageContainers
+// ---------------------------------------------------
 
-interface Vehicle{
+abstract class Vehicle{
 
 
     // abstract methods
-    public void vehicle_make();
-    public void vehicle_model();
+    abstract void vehicle_make();
+    abstract void vehicle_model();
 
-    // default method
-    default int number_wheels()
+    int number_wheels()
     {
         System.out.println("This vehicle has 4 wheels");
 
@@ -17,18 +20,16 @@ interface Vehicle{
 
 }
 
-interface Container{
-
-    // default method
-    default void storage_volume(double l, double w, double h)
+class Container{
+    void storage_volume(double l, double w, double h)
     {
         System.out.println("This container has a volume of " +  l*w*h + " cubic feet");
     }
 }
 
 
-// The Ford 150 IS-A Vehicle and Truck
- class FordF150 implements Vehicle, Container{
+//! Why is this a problem?
+class FordF150 extends Vehicle, Container{
 
     // implement abstract methods
     public void vehicle_make(){
@@ -43,7 +44,7 @@ interface Container{
 
 }
 
-class StorageContainer implements Container{
+class StorageContainer extends Container{
     public void max_capacity(){
         System.out.println("This storage container has a max capacity of 4 tons");
     }
@@ -63,6 +64,8 @@ class Composition{
         
         // use our default methods
         System.out.println("\n\n-----Default Methods-----");
+        
+        //! Why is this an error? 
         new_truck.storage_volume(5,4.7,2.3 );
         new_truck.number_wheels();
         
